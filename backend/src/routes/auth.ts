@@ -57,6 +57,14 @@ router.post(
   }
 );
 
+router.post("/logout", async (req: Request, res: Response) => {
+  res.cookie("auth_token", "", {
+    expires: new Date(0), //returning new invalid token which will set the token to empty
+  });
+
+  res.send();
+});
+
 router.get("/validate-token", verifyToken, (req: Request, res: Response) => {
   res.status(200).send({ userId: req.userId });
 });

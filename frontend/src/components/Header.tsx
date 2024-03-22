@@ -1,10 +1,11 @@
 import { Link } from "react-router-dom";
 import { useAppContext } from "../contexts/AppContext";
+import SignOut from "./SignOut";
 
 const Header = () => {
   const { isLoggedIn } = useAppContext();
 
-  // console.log("ssssssssssssssss", isLoggedIn);
+  // console.log("isLoggedIn", isLoggedIn);
   return (
     <div className="bg-blue-800 py-6">
       <div className="container mx-auto flex justify-between">
@@ -16,7 +17,7 @@ const Header = () => {
             <>
               <Link to="/my-bookings">My Bookings</Link>
               <Link to="/my-hotels">My Hotels</Link>
-              <button>Sign Out</button>
+              <SignOut />
             </>
           ) : (
             <Link
