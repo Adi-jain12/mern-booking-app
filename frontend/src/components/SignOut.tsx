@@ -10,7 +10,7 @@ const SignOut = () => {
     onSuccess: async () => {
       await queryClient.invalidateQueries("validateToken"); // it will force the validateToken to run again and when we click sign out button it will check the expired token and will return an error(in AppContext) which will refresh the page becuase the isError changed.
 
-      showToast({ message: "Successfully logged out!", type: "SUCCESS" });
+      showToast({ message: "Successfully Signed Out!", type: "SUCCESS" });
     },
 
     onError: (error: Error) => {
