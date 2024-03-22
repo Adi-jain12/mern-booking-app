@@ -3,6 +3,7 @@ import ReactDOM from "react-dom/client";
 import App from "./App.tsx";
 import "./index.css";
 import { QueryClient, QueryClientProvider } from "react-query";
+import { AppContextProvider } from "./contexts/AppContext.tsx";
 
 // if we get ann error then by default react query will do a retry indefinitely
 // Pros : if server is dying temporarily and comes back itself the doesnt have to do anything
@@ -19,7 +20,9 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     {/* App getting access to all react query things by wrapping App to QueryClientProvider */}
     <QueryClientProvider client={queryClient}>
-      <App />
+      <AppContextProvider>
+        <App />
+      </AppContextProvider>
     </QueryClientProvider>
   </React.StrictMode>
 );

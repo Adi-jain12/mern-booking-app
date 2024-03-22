@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form";
 import { useMutation } from "react-query";
 import * as apiClient from "../api-client";
+import { useAppContext } from "../contexts/AppContext";
 
 export type RegisterFormData = {
   firstName: string;
@@ -11,6 +12,8 @@ export type RegisterFormData = {
 };
 
 const Register = () => {
+  const { showToast } = useAppContext();
+
   const {
     register,
     watch,
@@ -19,13 +22,13 @@ const Register = () => {
   } = useForm<RegisterFormData>();
 
   //use of react-query as we do not have to manage any state ourselves as it is inbuilt in useMutation()
-  // it makes a request that mutates or create something anytime a POST PUT DELETE req is made.
+  //it makes a request that mutates or create something anytime a POST PUT DELETE req is made.
   const mutation = useMutation(apiClient.register, {
     onSuccess: () => {
-      console.log("Registration Successful");
+      showToast({ message: "Registration Successful!", type: "SUCCESS" });
     },
     onError: (error: Error) => {
-      console.log(error.message);
+      showToast({ message: error.message, type: "ERROR" });
     },
   });
 
