@@ -35,6 +35,8 @@ const Register = () => {
     },
   });
 
+  // it will call handleSubmit only if no errors found. react-hook-form takes care behind the scenes
+  //if no error then it will call the callback funtion with data
   const onSubmit = handleSubmit((data) => {
     mutation.mutate(data); //passing data to mutate func and it further passes to apiClient.register
   });
