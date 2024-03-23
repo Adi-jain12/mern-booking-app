@@ -5,6 +5,7 @@ import mongoose from "mongoose";
 import userRoutes from "./routes/users";
 import authRoutes from "./routes/auth";
 import cookieParser from "cookie-parser";
+import path from "path";
 
 mongoose.connect(process.env.MONGODB_CONNECTION_STRING as string);
 
@@ -19,6 +20,9 @@ app.use(
     credentials: true,
   })
 );
+
+//this means go to frontend dist folder which has compiled front end static assets and serve those static assets on the root of our URL that the backend runs on
+app.use(express.static(path.join(__dirname, "../../frontend/dist")));
 
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);

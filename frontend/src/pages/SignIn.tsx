@@ -71,7 +71,7 @@ const SignIn = () => {
 
       <span className="flex items-center justify-between">
         <span className="text-sm">
-          Not Registered?{" "}
+          Not Registered?
           <Link className="underline hover:bg-blue-100 p-2" to="/register">
             Create an account here
           </Link>
