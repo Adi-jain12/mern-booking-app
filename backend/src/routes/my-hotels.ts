@@ -16,7 +16,7 @@ const upload = multer({
 });
 
 router.post(
-  "/",
+  "/add",
   verifyToken,
 
   [
