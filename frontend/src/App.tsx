@@ -30,7 +30,7 @@ function App() {
           path="/search"
           element={
             <Layout>
-              <p>Search Page</p>
+              <Search />
             </Layout>
           }
         />
@@ -81,6 +81,7 @@ function App() {
             />
           </>
         )}
+
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </Router>
