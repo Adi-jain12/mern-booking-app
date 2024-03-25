@@ -1,6 +1,6 @@
 import { RegisterFormData } from "./pages/Register";
 import { SignInFormData } from "./pages/SignIn";
-import { HotelType } from "../../backend/src/shared/types";
+import { HotelSearchResponse, HotelType } from "../../backend/src/shared/types";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || ""; //importing env variables from .env file
 
@@ -116,4 +116,35 @@ export const updatedMyHotel = async (hotelFormData: FormData) => {
   }
 
   return response.json();
+};
+
+export type SearchParams = {
+  destination?: string;
+  checkIn?: string;
+  checkOut?: string;
+  adultCount?: string; //in params it always sends as a string
+  childCount?: string;
+  page?: string;
+};
+
+export const searchHotels = async (
+  searchParams: SearchParams
+): Promise<HotelSearchResponse> => {
+  const queryParams = new URLSearchParams(); //creating object to make queries in API call
+
+  //Example : api/hotels/search?destination=""
+  queryParams.append("destination", searchParams.destination || ""); // to add destination in api or empty string
+  queryParams.append("checkIn", searchParams.checkIn || "");
+  queryParams.append("checkOut", searchParams.checkOut || "");
+  queryParams.append("adultCount", searchParams.adultCount || "");
+  queryParams.append("childCount", searchParams.childCount || "");
+  queryParams.append("page", searchParams.page || "");
+
+  const response = await fetch(
+    `${API_BASE_URL}/api/hotels/search?${queryParams}`
+  );
+
+  if (!response) {
+    throw new Error("Error fetching hotels");
+  }
 };

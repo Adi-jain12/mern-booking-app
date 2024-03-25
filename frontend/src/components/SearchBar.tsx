@@ -3,9 +3,11 @@ import { useSearchContext } from "../contexts/SearchContext";
 import { MdTravelExplore } from "react-icons/md";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css"; //this will import stylesheet for us to style date picker
+import { useNavigate } from "react-router-dom";
 
 const SearchBar = () => {
   const search = useSearchContext();
+  const navigate = useNavigate();
 
   /*
   the reason we are creating these states here as well as SearchContext because this state will hold form data
@@ -28,6 +30,8 @@ const SearchBar = () => {
       adultCount,
       childCount
     );
+
+    navigate("/search");
   };
 
   const minDate = new Date();
