@@ -125,6 +125,11 @@ export type SearchParams = {
   adultCount?: string; //in params it always sends as a string
   childCount?: string;
   page?: string;
+  facilities?: string[];
+  types?: string[];
+  stars?: string[];
+  maxPrice?: string;
+  sortOption?: string;
 };
 
 export const searchHotels = async (
@@ -140,6 +145,22 @@ export const searchHotels = async (
   queryParams.append("childCount", searchParams.childCount || "");
   queryParams.append("page", searchParams.page || "");
 
+  queryParams.append("maxPrice", searchParams.maxPrice || "");
+  queryParams.append("sortOption", searchParams.sortOption || "");
+
+  //facilities is an array because user can select more than one facility
+  searchParams?.facilities?.forEach((facility) => {
+    queryParams.append("facilities", facility);
+  });
+
+  searchParams?.types?.forEach((type) => {
+    queryParams.append("types", type);
+  });
+
+  searchParams?.stars?.forEach((star) => {
+    queryParams.append("stars", star);
+  });
+
   const response = await fetch(
     `${API_BASE_URL}/api/hotels/search?${queryParams}`
   );
@@ -147,4 +168,6 @@ export const searchHotels = async (
   if (!response) {
     throw new Error("Error fetching hotels");
   }
+
+  return response.json();
 };
