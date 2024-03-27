@@ -12,7 +12,7 @@ type BookingFormData = {
 };
 
 const BookingForm = ({ currentUser }: Props) => {
-  const { register, handleSubmit } = useForm<BookingFormData>({
+  const { register } = useForm<BookingFormData>({
     defaultValues: {
       //whenever the component renders it will check for currentUser and if available it will pre populate the form base on currentUser object
       firstName: currentUser.firstName,
