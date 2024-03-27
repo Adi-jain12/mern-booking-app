@@ -2,11 +2,12 @@ import express, { Request, Response } from "express";
 import User from "../models/user";
 import jwt from "jsonwebtoken";
 import { check, validationResult } from "express-validator";
+import verifyToken from "../middleware/auth";
 
 const router = express.Router();
 
 //only /me because we dont want to expose userId in params by defining route like this /bookDetails/:userId  (to maintain security)
-router.get("/me", async (req: Request, res: Response) => {
+router.get("/me", verifyToken, async (req: Request, res: Response) => {
   const userId = req.userId;
 
   try {
