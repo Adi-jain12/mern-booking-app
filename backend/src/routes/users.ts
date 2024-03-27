@@ -5,6 +5,23 @@ import { check, validationResult } from "express-validator";
 
 const router = express.Router();
 
+//only /me because we dont want to expose userId in params by defining route like this /bookDetails/:userId  (to maintain security)
+router.get("/me", async (req: Request, res: Response) => {
+  const userId = req.userId;
+
+  try {
+    const user = await User.findById(userId).select("-password"); //this sends response to client without password
+
+    if (!user) {
+      return res.status(400).json({ message: "User not found" });
+    }
+
+    res.json(user);
+  } catch (error) {
+    res.status(500).json({ message: "Somthing went wrong" });
+  }
+});
+
 router.post(
   "/register",
   [
