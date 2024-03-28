@@ -13,6 +13,20 @@ export type HotelType = {
   starRating: number;
   imageUrls: string[];
   lastUpdated: Date; // to perform search of hotels based on lastUpdated
+  bookings: BookingType[]; // to store booking of BookingType in an array
+};
+
+export type BookingType = {
+  _id: string;
+  userId: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  adultCount: number;
+  childCount: number;
+  checkIn: Date;
+  checkOut: Date;
+  totalCost: number;
 };
 
 export type HotelSearchResponse = {
@@ -31,3 +45,9 @@ export type UserType = {
   firstName: string;
   lastName: string;
 }; //defining types as we are using TS
+
+export type paymentIntentResponse = {
+  paymentIntentId: string;
+  clientSecret: string;
+  totalCost: number;
+};
