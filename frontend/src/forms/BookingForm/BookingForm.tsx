@@ -3,7 +3,8 @@ import {
   PaymentIntentResponse,
   UserType,
 } from "../../../../backend/src/shared/types";
-import { CardElement } from "@stripe/react-stripe-js";
+import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
+import { StripeCardElement } from "@stripe/stripe-js";
 
 type Props = {
   currentUser: UserType;
@@ -17,6 +18,9 @@ type BookingFormData = {
 };
 
 const BookingForm = ({ currentUser, paymentIntent }: Props) => {
+  const stripe = useStripe();
+  const elements = useElements();
+
   const { register } = useForm<BookingFormData>({
     defaultValues: {
       //whenever the component renders it will check for currentUser and if available it will pre populate the form base on currentUser object
@@ -25,6 +29,24 @@ const BookingForm = ({ currentUser, paymentIntent }: Props) => {
       email: currentUser.email,
     },
   });
+
+  const onSubmit = async (formData: BookingFormData) => {
+    //just a TS thing where it checks for stripe when the page loads and if not available it will return
+    if (!stripe || !elements) {
+      return;
+    }
+
+    //this will confirm and complete the payment using the card details that user enters
+    const result = await stripe.confirmCardPayment(paymentIntent.clientSecret, {
+      payment_method: {
+        card: elements?.getElement(CardElement) as StripeCardElement,
+      },
+    });
+
+    if (result.paymentIntent?.status === "succeeded") {
+      //book the hotel
+    }
+  };
 
   return (
     <form
