@@ -6,6 +6,7 @@ import {
   PaymentIntentResponse,
 } from "../../backend/src/shared/types";
 import { UserType } from "../../backend/src/shared/types";
+import { BookingFormData } from "./forms/BookingForm/BookingForm";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || ""; //importing env variables from .env file
 
@@ -215,9 +216,27 @@ export const createPaymentIntent = async (
     }
   );
 
-  if (!response) {
+  if (!response.ok) {
     throw new Error("Error fetching payment intent");
   }
 
   return response.json();
+};
+
+export const createRoomBooking = async (formData: BookingFormData) => {
+  const response = await fetch(
+    `${API_BASE_URL}/api/hotels/${formData.hotelId}/bookings`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+      body: JSON.stringify(formData),
+    }
+  );
+
+  if (!response.ok) {
+    throw new Error("Error Booking Room");
+  }
 };
