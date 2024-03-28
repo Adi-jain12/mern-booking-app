@@ -46,7 +46,7 @@ export type UserType = {
   lastName: string;
 }; //defining types as we are using TS
 
-export type paymentIntentResponse = {
+export type PaymentIntentResponse = {
   paymentIntentId: string;
   clientSecret: string;
   totalCost: number;

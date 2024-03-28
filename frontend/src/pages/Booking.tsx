@@ -5,8 +5,11 @@ import { useParams } from "react-router-dom";
 import { useSearchContext } from "../contexts/SearchContext";
 import { useEffect, useState } from "react";
 import BookingDetailsSummary from "../forms/BookingForm/BookingDetailsSummary";
+import { Elements } from "@stripe/react-stripe-js";
+import { useAppContext } from "../contexts/AppContext";
 
 const Booking = () => {
+  const { stripePromise } = useAppContext();
   const search = useSearchContext();
   const { hotelId } = useParams();
 
@@ -22,6 +25,18 @@ const Booking = () => {
       setNumberOfNights(Math.ceil(nights)); //Math.ceil is for getting whole number
     }
   }, [search.checkIn, search.checkOut]);
+
+  const { data: paymentIntentData } = useQuery(
+    "createPaymentIntent",
+    () =>
+      apiClient.createPaymentIntent(
+        hotelId as string,
+        numberOfNights.toString()
+      ),
+    {
+      enabled: !!hotelId && numberOfNights > 0, //check this and then call the API
+    }
+  );
 
   const { data: currentUser } = useQuery(
     "fetchCurrentUser",
@@ -53,7 +68,20 @@ const Booking = () => {
         hotel={hotelData}
       />
 
-      {currentUser && <BookingForm currentUser={currentUser} />}
+      {currentUser && paymentIntentData && (
+        <Elements
+          //stripePromise coming from AppContext which connects the stripe and sends as prop whenever the app loads for the first time
+          stripe={stripePromise}
+          //clientSecret coming from createPayemtIntent API which gives response which includes clientSecret from backend when intent is created
+          options={{ clientSecret: paymentIntentData.clientSecret }}
+        >
+          {/* Elements tag coming from stripe SDK and it is used for using stripe UI on frontend to make payments using Cards*/}
+          <BookingForm
+            currentUser={currentUser}
+            paymentIntent={paymentIntentData}
+          />
+        </Elements>
+      )}
     </div>
   );
 };
