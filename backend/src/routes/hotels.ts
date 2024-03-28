@@ -83,7 +83,30 @@ router.get(
 router.post(
   "/:hotelId/bookings/payment-intent",
   verifyToken,
-  async (req: Request, res: Response) => {}
+  async (req: Request, res: Response) => {
+    //1. totalCost
+    //2. hotelId
+    //3. userId
+
+    const { numberOfNights } = req.body;
+    const hotelId = req.params.hotelId;
+
+    const hotel = await Hotel.findById(hotelId); // to extract pricePerNight value from hotel
+    if (!hotel) {
+      return res.status(400).json({ message: "Hotel not found" });
+    }
+
+    const totalCost = hotel.pricePerNight * numberOfNights;
+
+    const paymentIntent = await stripe.paymentIntents.create({
+      amount: totalCost,
+      currency: "",
+      metadata: {
+        hotelId,
+        userId: req.userId,
+      },
+    });
+  }
 );
 
 const constructSearchQuery = (queryParams: any) => {
