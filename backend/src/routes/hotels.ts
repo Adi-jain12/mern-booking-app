@@ -155,6 +155,8 @@ router.post(
         userId: req.userId,
       };
 
+      // console.log(newBooking);
+
       const updateHotel = await Hotel.findOneAndUpdate(
         {
           _id: req.params.hotelId,

@@ -207,8 +207,8 @@ export const createPaymentIntent = async (
   const response = await fetch(
     `${API_BASE_URL}/api/hotels/${hotelId}/bookings/payment-intent`,
     {
-      method: "POST",
       credentials: "include",
+      method: "POST",
       body: JSON.stringify({ numberOfNights }),
       headers: {
         "Content-Type": "application/json",
@@ -237,6 +237,6 @@ export const createRoomBooking = async (formData: BookingFormData) => {
   );
 
   if (!response.ok) {
-    throw new Error("Error Booking Room");
+    throw new Error("Error booking room");
   }
 };

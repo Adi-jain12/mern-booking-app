@@ -50,6 +50,8 @@ const BookingForm = ({ currentUser, paymentIntent }: Props) => {
     }
   );
 
+  // console.log("issssssssssssss", isLoading);
+
   const { register, handleSubmit } = useForm<BookingFormData>({
     defaultValues: {
       //whenever the component renders it will check for currentUser and if available it will pre populate the form base on currentUser object
