@@ -249,7 +249,7 @@ export const createRoomBooking = async (formData: BookingFormData) => {
   }
 };
 
-export const fetchMyBookings = async (): Promise<HotelType> => {
+export const fetchMyBookings = async (): Promise<HotelType[]> => {
   const response = await fetch(`${API_BASE_URL}/api/my-bookings`, {
     credentials: "include",
   });
