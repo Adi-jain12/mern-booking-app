@@ -67,7 +67,7 @@ export const SearchContextProvider = ({
     //sets the item in session storage whenever we update the state values
     sessionStorage.setItem("destination", destination);
     sessionStorage.setItem("checkIn", checkIn.toISOString());
-    sessionStorage.setItem("checkOut", checkIn.toISOString());
+    sessionStorage.setItem("checkOut", checkOut.toISOString());
     sessionStorage.setItem("adultCount", adultCount.toString());
     sessionStorage.setItem("childCount", childCount.toString());
     if (hotelId) {

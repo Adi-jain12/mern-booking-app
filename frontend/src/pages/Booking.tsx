@@ -56,7 +56,7 @@ const Booking = () => {
   }
 
   return (
-    <div className="grid md:grid-cols-[1fr_2fr] gap-4">
+    <div className="grid md:grid-cols-[1fr_2fr]">
       {/*1fr will take 1/3 of left container and 2fr will take 2/3 of right container */}
 
       <BookingDetailsSummary

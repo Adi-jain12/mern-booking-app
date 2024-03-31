@@ -113,7 +113,7 @@ router.post(
     }
 
     const response = {
-      paymentIntent: paymentIntent.id,
+      paymentIntentId: paymentIntent.id,
       clientSecret: paymentIntent.client_secret.toString(),
       totalCost,
     };
@@ -127,6 +127,7 @@ router.post(
   verifyToken,
   async (req: Request, res: Response) => {
     try {
+      // console.log(req.body);
       const paymentIntentId = req.body.paymentIntentId;
 
       const paymentIntent = await stripe.paymentIntents.retrieve(
@@ -155,8 +156,6 @@ router.post(
         userId: req.userId,
       };
 
-      // console.log(newBooking);
-
       const updateHotel = await Hotel.findOneAndUpdate(
         {
           _id: req.params.hotelId,
@@ -173,7 +172,7 @@ router.post(
       await updateHotel.save();
       res.status(200).send();
     } catch (error) {
-      res.status(500).json({ message: "Somthing went wrong" });
+      res.status(500).json({ message: "Something went wrong" });
     }
   }
 );

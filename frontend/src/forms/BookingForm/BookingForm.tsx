@@ -25,8 +25,8 @@ export type BookingFormData = {
   checkIn: string;
   checkOut: string;
   hotelId: string;
-  totalCost: number;
   paymentIntentId: string;
+  totalCost: number;
 };
 
 const BookingForm = ({ currentUser, paymentIntent }: Props) => {
@@ -50,7 +50,7 @@ const BookingForm = ({ currentUser, paymentIntent }: Props) => {
     }
   );
 
-  // console.log("issssssssssssss", isLoading);
+  console.log("issssssssssssss", paymentIntent);
 
   const { register, handleSubmit } = useForm<BookingFormData>({
     defaultValues: {
@@ -74,12 +74,16 @@ const BookingForm = ({ currentUser, paymentIntent }: Props) => {
       return;
     }
 
+    // console.log("fomrss", formData);
+    // console.log("clientSecret", paymentIntent.clientSecret);
     //this will confirm and complete the payment using the card details that user enters
     const result = await stripe.confirmCardPayment(paymentIntent.clientSecret, {
       payment_method: {
         card: elements.getElement(CardElement) as StripeCardElement,
       },
     });
+
+    console.log("result.paymentIntent?.status", result);
 
     if (result.paymentIntent?.status === "succeeded") {
       //book the hotel
