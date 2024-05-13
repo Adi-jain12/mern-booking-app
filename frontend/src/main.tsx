@@ -6,8 +6,8 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import { AppContextProvider } from "./contexts/AppContext.tsx";
 import { SearchContextProvider } from "./contexts/SearchContext.tsx";
 
-// if we get ann error then by default react query will do a retry indefinitely
-// Pros : if server is dying temporarily and comes back itself the doesnt have to do anything
+// if we get an error then by default react query will do a retry indefinitely
+// Pros : if server is dying temporarily and comes back itself then doesnt have to do anything
 // Cons : its quite expensive so it will make a lot of requests from the browser which we do not want so setting this off as below => retry: 0
 const queryClient = new QueryClient({
   defaultOptions: {

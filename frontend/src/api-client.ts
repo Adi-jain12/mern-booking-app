@@ -25,7 +25,7 @@ export const fetchCurrentUser = async (): Promise<UserType> => {
 export const register = async (formData: RegisterFormData) => {
   const response = await fetch(`${API_BASE_URL}/api/users/register`, {
     method: "POST",
-    credentials: "include", //includes http cookie for verify
+    credentials: "include", //includes http cookie and set the cookies in browser sent from backend for verify
     headers: {
       "Content-Type": "application/json",
     },

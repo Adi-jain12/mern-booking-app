@@ -19,15 +19,17 @@ cloudinary.config({
 
 mongoose.connect(process.env.MONGODB_CONNECTION_STRING as string);
 
-const app = express();
+const app = express(); // creates express app for us
 
-app.use(cookieParser());
-app.use(express.json());
+app.use(cookieParser()); // it helps to read the cookies coming with the request
+app.use(express.json()); // it helps to convert the body of API request into json automatically for us
 app.use(express.urlencoded({ extended: true })); //parses the url to create parameters
+
+// cors is a security thing which will prevent certain requests from certain urls
 app.use(
   cors({
     origin: process.env.FRONTEND_URL, //only accepts url that is defined in .env file which will protect app from other suspicious urls
-    credentials: true,
+    credentials: true, // it checks that the url must include http cookie in the request for verify
   })
 );
 
