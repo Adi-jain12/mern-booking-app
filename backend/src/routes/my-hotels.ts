@@ -77,17 +77,16 @@ router.get("/get-hotels", verifyToken, async (req: Request, res: Response) => {
 
 router.get(
   "/view-hotel/:id",
-  verifyToken,
+  // verifyToken,
   async (req: Request, res: Response) => {
-    const id = req.params.id.toString();
-
-    const hotel = await Hotel.findOne({
-      _id: id,
-      userId: req.userId,
-    });
-
-    res.json(hotel);
     try {
+      const id = req.params.id.toString();
+
+      const hotel = await Hotel.findOne({
+        _id: id,
+        // userId: req.userId,
+      });
+      res.json(hotel);
     } catch (error) {
       res.status(500).json({ message: "Error fetching hotels" });
     }
